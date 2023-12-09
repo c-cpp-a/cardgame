@@ -1,0 +1,35 @@
+# Project: ¿¨ÅÆÐÞÁ¶
+# Makefile created by Red Panda C++ 2.25.1
+
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+RES      = ¿¨ÅÆÐÞÁ¶_private.res
+OBJ      = main.o $(RES)
+LINKOBJ  = main.o ¿¨ÅÆÐÞÁ¶_private.res
+CLEANOBJ  =  main.o  ¿¨ÅÆÐÞÁ¶_private.res ¿¨ÅÆÐÞÁ¶.exe
+LIBS     =  -s -lgraphics -luuid -lmsimg32 -lgdi32 -limm32 -lole32 -loleaut32 -lwinmm -lgdiplus   -static
+INCS     =  
+CXXINCS  =  
+BIN      = ¿¨ÅÆÐÞÁ¶.exe
+CXXFLAGS = $(CXXINCS)  -pedantic -O2 -std=c++14 -pipe -Wall -Wextra
+CFLAGS   = $(INCS)  -pedantic -O2 -pipe -Wall -Wextra
+RM       = del /q /f
+WINDRESFLAGS  = 
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	-$(RM) $(CLEANOBJ) > NUL 2>&1
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+main.o: main.cpp control.h Player.h Screen.h
+	$(CPP) -c main.cpp -o main.o $(CXXFLAGS) 
+
+¿¨ÅÆÐÞÁ¶_private.res: ¿¨ÅÆÐÞÁ¶_private.rc 
+	$(WINDRES) -i ¿¨ÅÆÐÞÁ¶_private.rc --input-format=rc -o ¿¨ÅÆÐÞÁ¶_private.res -O coff $(WINDRESFLAGS) 
+

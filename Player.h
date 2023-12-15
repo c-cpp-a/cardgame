@@ -22,15 +22,44 @@ class clPlayer{
 	private://成员定义
 	stProfile _m_profile;
 	stPlayerAttackInfo _m_atkinfo;
-	int nowfloor;
+	int nowfloor,enterfloor;
 	public://函数定义
-	clPlayer(){}
-	clPlayer(const string &name,const string &password):_m_profile(stProfile(name,password)){}
+	clPlayer():_m_atkinfo(defaultPlayer),nowfloor(1){
+		_m_atkinfo.cards=vector<int>({1});
+	}
+	clPlayer(const string &name,const string &password):_m_profile(stProfile(name,password)),_m_atkinfo(defaultPlayer),nowfloor(1){
+		_m_atkinfo.cards=vector<int>({1});
+	}
 	~clPlayer(){}
 	
-	string name() const{return _m_profile._m_name;}
-	bool checkpassword(const string &pass){return _m_profile._m_password==pass;}
-	
+	string name() const{
+		return _m_profile._m_name;
+	}
+	bool checkpassword(const string &pass) const{
+		return _m_profile._m_password==pass;
+	}
+	int floorid() const{
+		return nowfloor;
+	}
+	void nxtfloor(){
+		++nowfloor;
+	}
+	int enterfloorid() const{
+		return enterfloor;
+	}
+	void setenterfloor(int id){
+		enterfloor=id;
+	}
+	const stPlayerAttackInfo &atkinfo() const{
+		return _m_atkinfo;
+	}
+	vector<string> nowcards() const{
+		vector<string> res;
+		for(auto &sth:_m_atkinfo.cards){
+			res.push_back(cards[sth].name);
+		}
+		return res;
+	}
 };
 class clPlayerGroup{
 	//管理玩家群，负责登陆和注册

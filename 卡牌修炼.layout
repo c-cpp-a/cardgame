@@ -1,62 +1,12 @@
 [
     {
-        "caretX": 3,
-        "caretY": 60,
-        "filename": "D:/Program Files/RedPanda-Cpp/projects/卡牌修炼/Card.h",
-        "focused": false,
-        "isOpen": true,
-        "leftChar": 1,
-        "order": 4,
-        "topLine": 28
-    },
-    {
-        "caretX": 3,
-        "caretY": 28,
-        "filename": "D:/Program Files/RedPanda-Cpp/projects/卡牌修炼/control.h",
-        "focused": false,
-        "isOpen": true,
-        "leftChar": 1,
-        "order": 3,
-        "topLine": 1
-    },
-    {
-        "caretX": 30,
-        "caretY": 1,
-        "filename": "D:/Program Files/RedPanda-Cpp/projects/卡牌修炼/floor.h",
+        "caretX": 16,
+        "caretY": 19,
+        "filename": "D:/projects/卡牌修炼/main.cpp",
         "focused": true,
-        "isOpen": true,
-        "leftChar": 1,
-        "order": 5,
-        "topLine": 1
-    },
-    {
-        "caretX": 11,
-        "caretY": 26,
-        "filename": "D:/Program Files/RedPanda-Cpp/projects/卡牌修炼/main.cpp",
-        "focused": false,
         "isOpen": true,
         "leftChar": 1,
         "order": 0,
         "topLine": 1
-    },
-    {
-        "caretX": 8,
-        "caretY": 33,
-        "filename": "D:/Program Files/RedPanda-Cpp/projects/卡牌修炼/Player.h",
-        "focused": false,
-        "isOpen": true,
-        "leftChar": 1,
-        "order": 1,
-        "topLine": 28
-    },
-    {
-        "caretX": 4,
-        "caretY": 180,
-        "filename": "D:/Program Files/RedPanda-Cpp/projects/卡牌修炼/Screen.h",
-        "focused": false,
-        "isOpen": true,
-        "leftChar": 1,
-        "order": 2,
-        "topLine": 151
     }
 ]

@@ -1,29 +1,35 @@
 #ifndef _HEADER_FILE_SCREEN_H_
 #define _HEADER_FILE_SCREEN_H_
+#ifndef SHOW_CONSOLE
 #include<graphics.h>
 #include<ege/sys_edit.h>
+#else
+#include<windows.h>
+#endif
 #include<string>
 #include<iostream>
 #include "control.h"
 #include "Player.h"
+#include "floor.h"
 using namespace std;
 //含义：
 //前缀cl表示这是class
 //前缀st表示这是struct
 //前缀e表示这是enum
 //前缀_m_表示这是成员
+#ifndef SHOW_CONSOLE
 namespace ScreenBase{
 	//屏幕命名空间，负责基本辅助画面的函数
 	//变量
 	constexpr int ScreenWidth=1000,ScreenHeight=500;
 	//函数
 	void init(){
-		initgraph(ScreenWidth,ScreenHeight,INIT_DEFAULT);
-		setcaption("卡牌游戏");
-		setbkcolor(WHITE);
+//		initgraph(ScreenWidth,ScreenHeight,INIT_DEFAULT);
+//		setcaption("卡牌游戏");
+//		setbkcolor(WHITE);
 	}
 	void close(){
-		closegraph();
+//		closegraph();
 	}
 	void titleText(const string &str,float midx,float midy){
 		setfont(50,0,"微软雅黑");
@@ -43,6 +49,7 @@ namespace ScreenBase{
 		Box.setfocus();
 	}
 }
+#endif
 class clScreen{
 	//屏幕类，负责画面的显示
 	public://结构体定义
@@ -59,8 +66,10 @@ class clScreen{
 	int vid;//目前页面的id（可随便修改）
 	private:
 	clPlayerGroup playergroup;
+	clPlayer nowplayer;
 	public://函数定义
 	clScreen():vid(eVid::eLogin){}
+#ifndef SHOW_CONSOLE
 	void show(){
 		setfillcolor(BROWN);
 		ege_fillrect(0,0,ScreenBase::ScreenWidth,70);
@@ -101,6 +110,30 @@ class clScreen{
 			break;
 		}
 	}
+#endif
+	void showatktest(const stAttackFuncInfo &afi,const stFloorInfo &floor){
+		//物理攻击用红色，防御用粉色； 魔法攻击用蓝色，防御用青色
+		cout << "开始战斗！\n";
+		cout << "debug:__func__=" << __func__ << ".\n";
+		cout << "have all turn=" << afi._m_atkInfo.size() << ".\n";
+		Sleep(10);
+		for(auto &turn:afi._m_atkInfo){
+			system("cls");
+			cout << nowplayer.name() << "使用了卡牌：" << cards[turn._m_playerUseCards].name << "。\n";
+			if(cards[turn._m_playerUseCards].atk1){
+				cout << "对 " << mobs[floor._m_mobs[turn._m_mobId]]._m_name << " 造成 " << cards[turn._m_playerUseCards].atk1 << " 点 ";
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED);
+				cout << "物理伤害。\n";
+			}
+			if(cards[turn._m_playerUseCards].atk2){
+				cout << "对 " << mobs[floor._m_mobs[turn._m_mobId]]._m_name << " 造成 " << cards[turn._m_playerUseCards].atk1 << " 点 ";
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE);
+				cout << "法术伤害。\n";
+			}
+			Sleep(1000);
+		}
+		system("pause");
+	}
 	void showtest(){
 		system("cls");
 		cout << "卡牌游戏\n" << vid << '\n';
@@ -121,9 +154,21 @@ class clScreen{
 					cin >> tmpProfile._m_password;
 					pair<int,clPlayer> res=playergroup.login(tmpProfile._m_name,tmpProfile._m_password);
 					cout << "res->first=" << res.first << ".\n";
-					cout << "测试完成！";
-					system("pause");
-					if(res.first==clPlayerGroup::eErrCode::eSuccess)	vid=eVid::eMain;
+					switch(res.first){
+					case clPlayerGroup::eErrCode::eSuccess:
+						cout << "登陆成功！";
+						break;
+					case clPlayerGroup::eErrCode::eWrongName:
+						cout << "名称错误！";
+						break;
+					case clPlayerGroup::eErrCode::eWrongPass:
+						cout << "密码错误！";
+						break;
+					}
+					if(res.first==clPlayerGroup::eErrCode::eSuccess){
+						vid=eVid::eMain;
+						nowplayer=res.second;
+					}
 				} else{
 					vid=eVid::eRegister;
 					return;
@@ -151,7 +196,6 @@ class clScreen{
 					if(res==clPlayerGroup::eErrCode::eSuccess)	vid=eVid::eLogin;
 				} else{
 					vid=eVid::eLogin;
-					return;
 				}
 			}
 			break;
@@ -177,10 +221,84 @@ class clScreen{
 				}
 			}
 			break;
+		case eVid::eTask:
+			cout << "关卡界面\n";
+			cout << "1 主界面\n";
+			cout << "2 关卡\n";
+			cout << "3 商城\n";
+			cout << "4 个人信息\n";
+			cout << "当前在第 " << nowplayer.floorid() << " 层。\n";
+			cout << floors[nowplayer.floorid()]._m_name << '\n' << floors[nowplayer.floorid()]._m_describe << '\n';
+			cout << "5 进入战斗\n";
+			cout << "6 选关\n";
+			{
+				int op;
+				cin >> op;
+				if(op==1){
+					vid=eVid::eMain;
+				} else if(op==2){
+					vid=eVid::eTask;
+				} else if(op==3){
+					vid=eVid::eStore;
+				} else if(op==4){
+					vid=eVid::eProfile;
+				} else if(op==5){
+					vid=eVid::eAttack;
+					nowplayer.setenterfloor(nowplayer.floorid());
+				} else if(op==6){
+					system("cls");
+					cout << "关卡界面\n";
+					cout << "1 主界面\n";
+					cout << "2 关卡\n";
+					cout << "3 商城\n";
+					cout << "4 个人信息\n";
+					for(int i=1;i<=nowplayer.floorid();i++){
+						cout << i+4 << '\t' << floors[i]._m_name << '\n';
+					}
+					cin >> op;
+					if(op==1){
+						vid=eVid::eMain;
+					} else if(op==2){
+						vid=eVid::eTask;
+					} else if(op==3){
+						vid=eVid::eStore;
+					} else if(op==4){
+						vid=eVid::eProfile;
+					} else{
+						op-=4;
+						vid=eVid::eAttack;
+						nowplayer.setenterfloor(op);
+					}
+				}
+			}
+			break;
+		case eVid::eAttack:
+			cout << "战斗界面\n";
+			cout << "1 主界面\n";
+			cout << "2 关卡\n";
+			cout << "3 商城\n";
+			cout << "4 个人信息\n";
+			cout << "当前在第 " << nowplayer.enterfloorid() << " 层。\n";
+			cout << floors[nowplayer.enterfloorid()]._m_name << '\n' << floors[nowplayer.enterfloorid()]._m_describe << '\n';
+			cout << "玩家使用卡牌：\n";
+			vector<string> ncard=nowplayer.nowcards();
+			for(auto &sth:ncard){
+				cout << sth << ' ';
+			}
+			cout << '\n';
+			system("pause");
+			cout << "关卡怪物：\n";
+			int t=1;
+			for(auto &sth:floors[nowplayer.enterfloorid()]._m_mobs){
+				cout << t << '\t' << mobs[sth]._m_name << '\n';
+				cout << mobs[sth]._m_describe << '\n';
+				++t;
+			}
+			system("pause");
+			showatktest(attack(nowplayer.atkinfo(),floors[nowplayer.enterfloorid()]),floors[nowplayer.enterfloorid()]);
+			vid=eVid::eTask;
+			break;
 		}
-		
-			
 	}
-	
 };
 #endif

@@ -31,12 +31,12 @@ struct stPlayerAttackInfo{
 	int def1;//当前物盾
 	int def2;//当前魔盾
 	vector<int> cards;//手中卡牌（只存id）
-	stPlayerAttackInfo(int _HP=0,const vector<int> &_cards={}):HP(_HP),hp(_HP),def1(0),def2(0),cards(_cards){}
-	bool isdead=false;
+	bool isdead=false;//是否死亡
+	stPlayerAttackInfo(int _HP=0,const vector<int> &_cards={}):HP(_HP),hp(_HP),def1(0),def2(0),cards(_cards),isdead(false){}
 	void addhp(int delta){
 		hp=min(hp+delta,HP);
 	}
-	void recivecard_fromother(const stCard &card){
+	void receivecard_fromother(const stCard &card){
 		if(def1<card.atk1){
 			hp-=card.atk1-def1;
 			def1=0;
@@ -58,11 +58,12 @@ struct stPlayerAttackInfo{
 			def2-=card.atk2;
 		}
 	}
-	void recivecard_fromself(const stCard &card){
+	void receivecard_fromself(const stCard &card){
 		HP+=card.addHP;
-		hp=max(hp+card.addhp,HP);
+		addhp(card.addhp);
 		def1+=card.def1;
 		def2+=card.def2;
 	}
 };
+const stPlayerAttackInfo defaultPlayer=stPlayerAttackInfo(100,vector<int>({1,1,1}));
 #endif

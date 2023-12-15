@@ -1,1 +1,4 @@
-
+XX=g++
+CXXFLAGS=-g
+NATIVE=on
+TUNE=generic

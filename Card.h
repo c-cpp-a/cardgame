@@ -23,7 +23,8 @@ const stCard cards[]={//															卡牌id
 	stCard({"尖棍","不好说，真的不好说。",0,0,2,0,0,0}),//							5
 	stCard({"法杖","居然能穿透护盾，实在防不住啊。",0,0,0,2,0,0}),//				6
 	stCard({"尖刺","能刺穿敌人的利器。",0,0,6,0,0,0}),//							7
-	stCard({"上古神器-1","能发现这个失传已久的神器，实属不易。",1,1,7,1,2,3})//		8
+	stCard({"上古神器-1","能发现这个失传已久的神器，实属不易。",1,1,7,1,2,3}),//	8
+	stCard({"鼓","长自己气势，灭他人威风。",0,0,2,0,1,0}),//						9
 };
 struct stPlayerAttackInfo{
 	int HP;//生命值上限
@@ -65,5 +66,5 @@ struct stPlayerAttackInfo{
 		def2+=card.def2;
 	}
 };
-const stPlayerAttackInfo defaultPlayer=stPlayerAttackInfo(100,vector<int>({1,1,1}));
+const stPlayerAttackInfo defaultPlayer=stPlayerAttackInfo(10,vector<int>({1,1,1,1,1}));
 #endif

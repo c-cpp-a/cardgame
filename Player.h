@@ -17,19 +17,17 @@ class clPlayer{
 		string _m_name,_m_password;
 		string _m_label,_m_profile;
 		stProfile(string name=string(),string password=string(),string label=string(),string profile=string()):
-		_m_name(name),_m_password(password),_m_label(label),_m_profile(profile){}
+				  _m_name(name),_m_password(password),_m_label(label),_m_profile(profile){}
 	};
 	private://成员定义
 	stProfile _m_profile;
 	stPlayerAttackInfo _m_atkinfo;
 	int nowfloor,enterfloor;
 	public://函数定义
-	clPlayer():_m_atkinfo(defaultPlayer),nowfloor(1){
-		_m_atkinfo.cards=vector<int>({1});
-	}
-	clPlayer(const string &name,const string &password):_m_profile(stProfile(name,password)),_m_atkinfo(defaultPlayer),nowfloor(1){
-		_m_atkinfo.cards=vector<int>({1});
-	}
+	clPlayer():
+			_m_atkinfo(defaultPlayer),nowfloor(1){}
+	clPlayer(const string &name,const string &password):
+			_m_profile(stProfile(name,password)),_m_atkinfo(defaultPlayer),nowfloor(1){}
 	~clPlayer(){}
 	
 	string name() const{
@@ -59,6 +57,9 @@ class clPlayer{
 			res.push_back(cards[sth].name);
 		}
 		return res;
+	}
+	void dropcard(int card){
+		_m_atkinfo.cards.push_back(card);
 	}
 };
 class clPlayerGroup{

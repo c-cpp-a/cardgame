@@ -114,23 +114,57 @@ class clScreen{
 	void showatktest(const stAttackFuncInfo &afi,const stFloorInfo &floor){
 		//物理攻击用红色，防御用粉色； 魔法攻击用蓝色，防御用青色
 		cout << "开始战斗！\n";
-		cout << "debug:__func__=" << __func__ << ".\n";
-		cout << "have all turn=" << afi._m_atkInfo.size() << ".\n";
 		Sleep(10);
+		int turnid=0;
 		for(auto &turn:afi._m_atkInfo){
+			++turnid;
 			system("cls");
-			cout << nowplayer.name() << "使用了卡牌：" << cards[turn._m_playerUseCards].name << "。\n";
+			cout << "第 " << turnid << " 回合。\n";
+			cout << nowplayer.name() << " 使用了卡牌：" << cards[turn._m_playerUseCards].name << "。\n";
 			if(cards[turn._m_playerUseCards].atk1){
 				cout << "对 " << mobs[floor._m_mobs[turn._m_mobId]]._m_name << " 造成 " << cards[turn._m_playerUseCards].atk1 << " 点 ";
 				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED);
-				cout << "物理伤害。\n";
+				cout << "物理伤害";
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_BLUE);
+				cout << "。\n";
 			}
 			if(cards[turn._m_playerUseCards].atk2){
 				cout << "对 " << mobs[floor._m_mobs[turn._m_mobId]]._m_name << " 造成 " << cards[turn._m_playerUseCards].atk1 << " 点 ";
 				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE);
-				cout << "法术伤害。\n";
+				cout << "法术伤害";
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_BLUE);
+				cout << "。\n";
 			}
-			Sleep(1000);
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_BLUE);
+			if(turn._m_mobUseCards==-1){
+				cout << mobs[floor._m_mobs[turn._m_mobId]]._m_name << " 被 打死 了！\n";
+				cout << "获得掉落物：" << cards[turn._m_drops].name << "。\n";
+				nowplayer.dropcard(turn._m_drops);
+			} else{
+				cout << mobs[floor._m_mobs[turn._m_mobId]]._m_name << " 使用了卡牌：" << cards[turn._m_mobUseCards].name << "。\n";
+				if(cards[turn._m_mobUseCards].atk1){
+					cout << "对 " << nowplayer.name() << " 造成 " << cards[turn._m_mobUseCards].atk1 << " 点 ";
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED);
+					cout << "物理伤害";
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_BLUE);
+					cout << "。\n";
+				}
+				if(cards[turn._m_mobUseCards].atk2){
+					cout << "对 " << nowplayer.name() << " 造成 " << cards[turn._m_mobUseCards].atk2 << " 点 ";
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE);
+					cout << "法术伤害";
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_BLUE);
+					cout << "。\n";
+				}
+			}
+			Sleep(800);
+		}
+//		cout << "afi.whowin=" << afi.whowin << ".\n";
+		if(afi.whowin==true){
+			cout << "玩家 胜利！\n";
+			if(nowplayer.enterfloorid()==nowplayer.floorid())	nowplayer.nxtfloor();
+		} else{
+			cout << "敌人 胜利！\n";
 		}
 		system("pause");
 	}
@@ -190,8 +224,6 @@ class clScreen{
 					cout << "密码：";
 					cin >> tmpProfile._m_password;
 					int res=playergroup.registers(tmpProfile._m_name,tmpProfile._m_password);
-					cout << "res->first=" << res << ".\n";
-					cout << "测试完成！";
 					system("pause");
 					if(res==clPlayerGroup::eErrCode::eSuccess)	vid=eVid::eLogin;
 				} else{

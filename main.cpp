@@ -1,9 +1,9 @@
 /**
  * @file main.cpp 
  * @brief: 程序的主入口，运行整个程序
- * @version:  Alpha 1.0
+ * @version:  Alpha 1.0.1
  * @author: C-cpp-a(github)
- * @date: 2023-12-15 18:19:07
+ * @date: 2023-12-16 10:57:05
  * 
  **/
 #define SHOW_CONSOLE
@@ -12,6 +12,8 @@
 #include "Screen.h"
 using namespace std;
 int main(){
+//	system("start program-check/check-file.exe");
+//	Sleep(1000);
 //	ScreenBase::init();
 	clScreen screen;
 //	system("pause");

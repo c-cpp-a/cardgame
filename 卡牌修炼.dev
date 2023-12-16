@@ -1,7 +1,7 @@
 [Project]
 filename = 卡牌修炼.dev
 name = 卡牌修炼
-UnitCount = 6
+UnitCount = 8
 Type = 1
 Ver = 3
 Includes = 
@@ -44,11 +44,11 @@ UseUTF8 = 0
 
 
 [Unit1]
-FileName = Player.h
+FileName = main.cpp
 CompileCpp = 1
-Folder = 头文件
-Compile = 0
-Link = 0
+Folder = 源文件
+Compile = 1
+Link = 1
 Priority = 1000
 OverrideBuildCmd = 0
 BuildCmd = 
@@ -60,26 +60,26 @@ RealEncoding = gbk
 Major = 1
 Minor = 0
 Release = 0
-Build = 69
+Build = 111
 LanguageID = 2052
 CharsetID = 1252
 CompanyName = 
-FileVersion = 1.0.0.69
+FileVersion = 1.0.0.111
 FileDescription = 卡牌修炼，让你的账号成长起来吧
 InternalName = 
 LegalCopyright = C-cpp-a (github)
 LegalTrademarks = 
 OriginalFilename = 卡牌修炼.exe
 ProductName = 卡牌修炼
-ProductVersion = 1.0.0.69
+ProductVersion = 1.0.0.111
 AutoIncBuildNr = 1
 SyncProduct = 1
 
 
 [Unit2]
-FileName = floor.h
+FileName = README.md
 CompileCpp = 1
-Folder = 头文件
+Folder = 其他文件
 Compile = 0
 Link = 0
 Priority = 1000
@@ -90,32 +90,6 @@ RealEncoding = gbk
 
 
 [Unit3]
-FileName = control.h
-CompileCpp = 1
-Folder = 头文件
-Compile = 0
-Link = 0
-Priority = 1000
-OverrideBuildCmd = 0
-BuildCmd = 
-FileEncoding = SYSTEM
-RealEncoding = gbk
-
-
-[Unit4]
-FileName = Card.h
-CompileCpp = 1
-Folder = 头文件
-Compile = 0
-Link = 0
-Priority = 1000
-OverrideBuildCmd = 0
-BuildCmd = 
-FileEncoding = PROJECT
-RealEncoding = gbk
-
-
-[Unit5]
 FileName = Screen.h
 CompileCpp = 1
 Folder = 头文件
@@ -128,16 +102,68 @@ FileEncoding = SYSTEM
 RealEncoding = gbk
 
 
-[Unit6]
-FileName = main.cpp
+[Unit4]
+FileName = Player.h
 CompileCpp = 1
-Folder = 源文件
-Compile = 1
-Link = 1
+Folder = 头文件
+Compile = 0
+Link = 0
 Priority = 1000
 OverrideBuildCmd = 0
 BuildCmd = 
 FileEncoding = SYSTEM
+RealEncoding = gbk
+
+
+[Unit5]
+FileName = control.h
+CompileCpp = 1
+Folder = 头文件
+Compile = 0
+Link = 0
+Priority = 1000
+OverrideBuildCmd = 0
+BuildCmd = 
+FileEncoding = SYSTEM
+RealEncoding = gbk
+
+
+[Unit6]
+FileName = floor.h
+CompileCpp = 1
+Folder = 头文件
+Compile = 0
+Link = 0
+Priority = 1000
+OverrideBuildCmd = 0
+BuildCmd = 
+FileEncoding = PROJECT
+RealEncoding = gbk
+
+
+[Unit7]
+FileName = README-EN.md
+CompileCpp = 1
+Folder = 其他文件
+Compile = 0
+Link = 0
+Priority = 1000
+OverrideBuildCmd = 0
+BuildCmd = 
+FileEncoding = PROJECT
+RealEncoding = 
+
+
+[Unit8]
+FileName = Card.h
+CompileCpp = 1
+Folder = 头文件
+Compile = 0
+Link = 0
+Priority = 1000
+OverrideBuildCmd = 0
+BuildCmd = 
+FileEncoding = PROJECT
 RealEncoding = gbk
 
 

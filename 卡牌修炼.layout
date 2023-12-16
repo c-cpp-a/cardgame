@@ -1,12 +1,72 @@
 [
     {
-        "caretX": 16,
-        "caretY": 19,
+        "caretX": 20,
+        "caretY": 12,
         "filename": "D:/projects/卡牌修炼/main.cpp",
-        "focused": true,
+        "focused": false,
         "isOpen": true,
         "leftChar": 1,
         "order": 0,
         "topLine": 1
+    },
+    {
+        "caretX": 1,
+        "caretY": 2,
+        "filename": "D:/projects/卡牌修炼/README.md",
+        "focused": true,
+        "isOpen": true,
+        "leftChar": 1,
+        "order": 6,
+        "topLine": 1
+    },
+    {
+        "caretX": 6,
+        "caretY": 158,
+        "filename": "D:/projects/卡牌修炼/Screen.h",
+        "focused": false,
+        "isOpen": true,
+        "leftChar": 1,
+        "order": 1,
+        "topLine": 125
+    },
+    {
+        "caretX": 6,
+        "caretY": 7,
+        "filename": "D:/projects/卡牌修炼/Player.h",
+        "focused": false,
+        "isOpen": true,
+        "leftChar": 1,
+        "order": 3,
+        "topLine": 1
+    },
+    {
+        "caretX": 16,
+        "caretY": 8,
+        "filename": "D:/projects/卡牌修炼/control.h",
+        "focused": false,
+        "isOpen": true,
+        "leftChar": 1,
+        "order": 5,
+        "topLine": 1
+    },
+    {
+        "caretX": 18,
+        "caretY": 7,
+        "filename": "D:/projects/卡牌修炼/floor.h",
+        "focused": false,
+        "isOpen": true,
+        "leftChar": 1,
+        "order": 4,
+        "topLine": 16
+    },
+    {
+        "caretX": 21,
+        "caretY": 24,
+        "filename": "D:/projects/卡牌修炼/Card.h",
+        "focused": false,
+        "isOpen": true,
+        "leftChar": 1,
+        "order": 2,
+        "topLine": 13
     }
 ]

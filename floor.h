@@ -19,13 +19,17 @@ const stMobInfo mobs[]={//																											怪物id
 	stMobInfo({//																													1
 		"小妖","一些咋咋呼呼的小妖，看起来有踢天弄井的本事，但一打就跑。",
 		stPlayerAttackInfo(5,vector<int>({4,4})),
-		make_pair(vector<double>({0.9,0.5,0.1}),vector<int>({1,2,3}))
+		make_pair(vector<double>({0.6,0.3,0.1}),vector<int>({1,2,3}))
 	}),
 	stMobInfo({//																													2
 		"狼","一屠晚归，担中肉尽，止有剩骨。",
 		stPlayerAttackInfo(10,vector<int>({4,4,5})),
-		make_pair(vector<double>({0.9,0.4,0.1,0.01}),vector<int>({2,3,7,8}))
+		make_pair(vector<double>({0.5,0.4,0.09,0.01}),vector<int>({2,3,7,8}))
 	}),
+	stMobInfo({//																													3
+		"小魔王","在魔王手下勤勤恳恳做事，踏踏实实做人，哦不，妖魔。",
+		stPlayerAttackInfo(13,vector<int>({9,9,6,6,4,4}))
+	})
 };
 struct stFloorInfo{
 	int dep;//第几层
@@ -36,7 +40,8 @@ struct stFloorInfo{
 const stFloorInfo floors[]{//id=第几层
 	stFloorInfo({0,"test","test",vector<int>()}),
 	stFloorInfo({1,"入门关","进入这个关卡，算是正式迈入了修炼的大门。",vector<int>({1})}),
-	stFloorInfo({2,"沉心关","你为什么过不去？不要着急，慢慢来。",vector<int>({1,2})})
+	stFloorInfo({2,"沉心关","你为什么过不去？不要着急，慢慢来。",vector<int>({1,2})}),
+	stFloorInfo({3,"练气关","敌人可能会用到一些很奇怪的东西。",vector<int>({1,1,3})})
 };
 struct stAttackFuncInfo{
 	//战斗过程
@@ -58,10 +63,10 @@ stAttackFuncInfo attack(const stPlayerAttackInfo &player,const stFloorInfo &floo
 	for(auto &sth:floor._m_mobs){
 		nowmobs.push_back(mobs[sth]);
 	}
-	while((nowplayer.hp>0 && nowmobs.size()) || (nowplayer.cards.empty())){
+	while((nowplayer.hp>0 && nowmobs.size()) && (nowplayer.cards.size())){
 		unsigned 	idmob=Random::randbetween(0,nowmobs.size()-1),
-					idcardplayer=Random::randbetween(0,nowplayer.cards.size()-1);
-		stMobInfo tmp=nowmobs[idmob];
+		idcardplayer=Random::randbetween(0,nowplayer.cards.size()-1);
+		stMobInfo &tmp=nowmobs[idmob];
 		stAttackFuncInfo::stTurn nowturn;
 		nowturn._m_mobId=idmob;
 		nowturn._m_playerUseCards=nowplayer.cards[idcardplayer];

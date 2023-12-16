@@ -27,7 +27,7 @@ clean: clean-custom
 $(BIN): $(OBJ)
 	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
 
-main.o: main.cpp control.h Card.h floor.h Screen.h Player.h
+main.o: main.cpp Screen.h Player.h control.h floor.h Card.h
 	$(CPP) -c main.cpp -o main.o $(CXXFLAGS) 
 
 ¿¨ÅÆÐÞÁ¶_private.res: ¿¨ÅÆÐÞÁ¶_private.rc 

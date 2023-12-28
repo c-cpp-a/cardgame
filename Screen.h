@@ -69,6 +69,20 @@ class clScreen{
 	clPlayer nowplayer;
 	public://函数定义
 	clScreen():vid(eVid::eLogin){}
+	std::string save() const{
+		return Export::merge(vector<string>({StringAndInt::intTostring(vid),playergroup.save(),nowplayer.save()}),"\t\r\nu");
+	}
+	void load(const string &data){
+//		vector<string> datas=Export::split(data,"\t\r\nu");
+		cerr << "data=";
+		for(auto &ch:data){
+			cerr << ch+0 << ' ';
+		}
+		cerr << '\n';
+//		vid=StringAndInt::StringToint(datas[0]);
+//		playergroup.load(datas[1]);
+//		nowplayer.load(datas[2]);
+	}
 #ifndef SHOW_CONSOLE
 	void show(){
 		setfillcolor(BROWN);
@@ -129,9 +143,16 @@ class clScreen{
 				cout << "。\n";
 			}
 			if(cards[turn._m_playerUseCards].atk2){
-				cout << "对 " << mobs[floor._m_mobs[turn._m_mobId]]._m_name << " 造成 " << cards[turn._m_playerUseCards].atk1 << " 点 ";
+				cout << "对 " << mobs[floor._m_mobs[turn._m_mobId]]._m_name << " 造成 " << cards[turn._m_playerUseCards].atk2 << " 点 ";
 				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE);
 				cout << "法术伤害";
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_BLUE);
+				cout << "。\n";
+			}
+			if(cards[turn._m_playerUseCards].def1){
+				cout << "给 " << nowplayer.name() << " 增加 " << cards[turn._m_playerUseCards].def1 << " 点 ";
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED|FOREGROUND_INTENSITY);
+				cout << "物理护盾";
 				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_BLUE);
 				cout << "。\n";
 			}
@@ -313,23 +334,62 @@ class clScreen{
 			cout << "当前在第 " << nowplayer.enterfloorid() << " 层。\n";
 			cout << floors[nowplayer.enterfloorid()]._m_name << '\n' << floors[nowplayer.enterfloorid()]._m_describe << '\n';
 			cout << "玩家使用卡牌：\n";
-			vector<string> ncard=nowplayer.nowcards();
-			for(auto &sth:ncard){
-				cout << sth << ' ';
+			{
+				vector<string> ncard=nowplayer.nowcards();
+				for(auto &sth:ncard){
+					cout << sth << ' ';
+				}
+				cout << '\n';
+				system("pause");
+				cout << "关卡怪物：\n";
+				int t=1;
+				for(auto &sth:floors[nowplayer.enterfloorid()]._m_mobs){
+					cout << t << '\t' << mobs[sth]._m_name << '\n';
+					cout << mobs[sth]._m_describe << '\n';
+					++t;
+				}
+				system("pause");
+				showatktest(attack(nowplayer.atkinfo(),floors[nowplayer.enterfloorid()]),floors[nowplayer.enterfloorid()]);
+				vid=eVid::eTask;
 			}
-			cout << '\n';
-			system("pause");
-			cout << "关卡怪物：\n";
-			int t=1;
-			for(auto &sth:floors[nowplayer.enterfloorid()]._m_mobs){
-				cout << t << '\t' << mobs[sth]._m_name << '\n';
-				cout << mobs[sth]._m_describe << '\n';
-				++t;
-			}
-			system("pause");
-			showatktest(attack(nowplayer.atkinfo(),floors[nowplayer.enterfloorid()]),floors[nowplayer.enterfloorid()]);
-			vid=eVid::eTask;
 			break;
+		case eVid::eProfile:
+			cout << "个人信息\n";
+			cout << "1 主界面\n";
+			cout << "2 关卡\n";
+			cout << "3 商城\n";
+			cout << "4 个人信息\n";
+			cout << "用户 " << nowplayer.name() << "\n";
+			cout << nowplayer.profile()._m_label << '\n';
+			cout << "个人简介\n";
+			cout << nowplayer.profile()._m_profile << '\n';
+			cout << "5 更改个人标签\n";
+			cout << "6 更改个人简介\n";
+			cout << "7 查看卡牌\n";
+			{
+				int op;
+				cin >> op;
+				if(op==1){
+					vid=eVid::eMain;
+				} else if(op==2){
+					vid=eVid::eTask;
+				} else if(op==3){
+					vid=eVid::eStore;
+				} else if(op==4){
+					vid=eVid::eProfile;
+				} else if(op==5){
+					system("cls");
+					cout << "个人标签\n";
+					cout << nowplayer.profile()._m_label << '\n';
+					cout << "1 更改个人标签\n";
+					cout << "2 返回\n";
+				}
+			}
+			break;
+		default:
+			cout << "此功能暂未开发！\n";
+			system("pause");
+			vid=eVid::eMain;
 		}
 	}
 };

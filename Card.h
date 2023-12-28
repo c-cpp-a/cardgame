@@ -2,6 +2,8 @@
 #define _HEADER_FILE_CARD_H_
 #include<vector>
 #include<string>
+#include "control.h"
+#include "export.h"
 using namespace std;
 struct stCard{
 	string name;//Ãû×Ö
@@ -64,6 +66,23 @@ struct stPlayerAttackInfo{
 		addhp(card.addhp);
 		def1+=card.def1;
 		def2+=card.def2;
+	}
+	string save() const{
+		vector<string> res;
+		res.push_back(StringAndInt::intTostring(HP));
+		for(auto &cardid:cards){
+			res.push_back(StringAndInt::intTostring(cardid));
+		}
+		return Export::merge(res,",.!-");
+	}
+	void load(const string &str){
+		vector<string> res=Export::split(str,",.!-");
+		HP=StringAndInt::StringToint(res[0]);
+		cards.clear();
+		for(int i=1,siz=res.size();i<siz;i++){
+			cards.push_back(StringAndInt::StringToint(res[i]));
+		}
+		(*this)=stPlayerAttackInfo(HP,cards);
 	}
 };
 const stPlayerAttackInfo defaultPlayer=stPlayerAttackInfo(10,vector<int>({1,1,1,1,1}));

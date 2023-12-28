@@ -31,6 +31,7 @@ class clMouse{
 #include<vector>
 #include<random>
 #include<ctime>
+#include<string>
 namespace Random{
 	using namespace std;
 	static default_random_engine e(time(0));

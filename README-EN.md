@@ -1,6 +1,6 @@
 ## Card Cultivation
 ### Language
-For a better reading experience, we have provided readme files for [Chinese](README.md) and [English](README-EN.md).
+For a better reading experience, we have provided readme files for [ÖÐÎÄ](README.md) and [English](README-EN.md).
 ### Current release notes
 A long time ago, people lived in a world that did not have any high-tech elements, only the most primitive "qi". The wise men of humanity began to think about how to use "qi" to accomplish something. This is their result - cultivation, to make themselves beyond mortals.
 

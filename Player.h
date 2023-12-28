@@ -16,8 +16,19 @@ class clPlayer{
 	struct stProfile{//玩家个人信息
 		string _m_name,_m_password;
 		string _m_label,_m_profile;
-		stProfile(string name=string(),string password=string(),string label=string(),string profile=string()):
+		stProfile(string name=string(),string password=string(),string label=string("default"),string profile=string("default")):
 				  _m_name(name),_m_password(password),_m_label(label),_m_profile(profile){}
+		
+		string save() const{
+			return Export::merge(vector<string>({_m_name,_m_password,_m_label,_m_profile}),StringAndInt::intTostring(0x0110CDEF));
+		}
+		void load(const string &data){
+			vector<string> datas=Export::split(data,StringAndInt::intTostring(0x0110CDEF));
+			_m_name=datas[0];
+			_m_password=datas[1];
+			_m_label=datas[2];
+			_m_profile=datas[3];
+		}
 	};
 	private://成员定义
 	stProfile _m_profile;
@@ -33,6 +44,14 @@ class clPlayer{
 	string name() const{
 		return _m_profile._m_name;
 	}
+	const stProfile &profile() const{
+		return _m_profile;
+	}
+	stProfile &profile(){
+		return _m_profile;
+	}
+	
+	
 	bool checkpassword(const string &pass) const{
 		return _m_profile._m_password==pass;
 	}
@@ -61,6 +80,18 @@ class clPlayer{
 	void dropcard(int card){
 		_m_atkinfo.cards.push_back(card);
 	}
+	
+	string save() const{
+		return Export::merge(vector<string>({_m_profile.save(),_m_atkinfo.save(),StringAndInt::intTostring(nowfloor)}),StringAndInt::intTostring(0xE0FEA7F0));
+	}
+	void load(const string &data){
+		const vector<string> datas=Export::split(data,StringAndInt::intTostring(0xE0FEA7F0));
+		_m_profile.load(datas[0]);
+		_m_atkinfo.load(datas[1]);
+		nowfloor=StringAndInt::StringToint(datas[2]);
+		enterfloor=nowfloor;
+	}
+	
 };
 class clPlayerGroup{
 	//管理玩家群，负责登陆和注册
@@ -95,6 +126,22 @@ public://函数
 		}
 		players[name]=clPlayer(name,password);
 		return eErrCode::eSuccess;
+	}
+	
+	string save() const{
+		vector<string> player_saves;
+		for(auto &player:players){
+			player_saves.push_back(player.second.save());
+		}
+		return Export::merge(player_saves,"z\rt\n");
+	}
+	void load(const string &data){
+		vector<string> player_saves=Export::split(data,"z\rt\n");
+		for(auto &perdat:player_saves){
+			clPlayer nowplayer;
+			nowplayer.load(perdat);
+			players[nowplayer.name()]=nowplayer;
+		}
 	}
 };
 #endif

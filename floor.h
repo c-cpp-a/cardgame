@@ -28,7 +28,8 @@ const stMobInfo mobs[]={//																											怪物id
 	}),
 	stMobInfo({//																													3
 		"小魔王","在魔王手下勤勤恳恳做事，踏踏实实做人，哦不，妖魔。",
-		stPlayerAttackInfo(13,vector<int>({9,9,6,6,4,4}))
+		stPlayerAttackInfo(13,vector<int>({9,9,6,6,4,4})),
+		make_pair(vector<double>({0.41,0.41,0.1,0.06,0.02}),vector<int>{2,3,6,7,8})
 	})
 };
 struct stFloorInfo{
